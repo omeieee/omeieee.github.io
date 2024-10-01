@@ -154,36 +154,105 @@ footer > section > a {          color: white;
                                 text-decoration: none; }
 footer > section > a:hover { color: rgba(0, 0, 0, 0.336);}
 
+@media screen and (max-width: 768px) {
+    nav ul {
+        justify-content: space-evenly; /* กระจายรายการเมนูให้เท่าๆ กัน */
+    }
 
+    nav ul li {
+        margin: 0 10px; /* ลดระยะห่างลงสำหรับหน้าจอมือถือ */
+    }
 
-@media (min-width: 600px) {
-        body {
-            font-size: 18px;
-        }
-    
-        nav ul {
-            justify-content: space-around;
-        }
-    
-        section {
-            max-width: 800px;
-            margin: 20px auto;
-        }
+    nav ul li a {
+        font-size: 16px; /* ปรับขนาดฟอนต์สำหรับมือถือ */
+    }
+
+    /* ปรับขนาดตัวหนังสือของ header */
+    h1 {
+        font-size: 48px;
+        letter-spacing: 5px;
+    }
+
+    /* ปรับขนาดและการจัดวางของภาพและคำบรรยาย */
+    .Flower-image {
+        width: 100%;
+                   height: auto;
+                   margin-bottom: 20px;
+    }
+
+    .description {
+        font-size: 14px; /* ลดขนาดฟอนต์ลงสำหรับมือถือ */
+        max-width: 60%; /* ให้ข้อความขยายเต็มหน้าจอ */
+    }
+
+    /* ปรับขนาดปุ่มและตำแหน่ง */
+    .cta, .see-more {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    /* ปรับการจัดวางและขนาดของ footer */
+    footer {
+        padding: 20px;
+        text-align: center;
+    }
+
+    footer > section:first-child {
+        display: none; /* ซ่อนส่วนที่ไม่จำเป็น */
+    }
+
+    footer > section {
+        text-align: center;
+                        padding-top: 2em;
+    }
+}
+
+/* ปรับแต่งเพิ่มเติมสำหรับหน้าจอที่เล็กกว่า 480px (มือถือขนาดเล็ก) */
+@media screen and (max-width: 480px) {
+    nav ul {
+        justify-content: space-between; /* ปรับระยะห่างให้เหมาะกับหน้าจอที่เล็กกว่า */
+    }
+
+    nav ul li {
+        margin: 0 5px; /* เว้นระยะห่างที่เล็กลงสำหรับมือถือขนาดเล็ก */
+    }
+
+    nav ul li a {
+        font-size: 14px; /* ขนาดฟอนต์ที่เล็กลง */
+    }
+
+    header {
+        padding: 10px 20px;
+    }
+
+    .logo {
+        font-size: 18px;
+    }
+
+    h1 {
+        font-size: 36px;
+    }
+
+    .cta, .see-more {
+        font-size: 14px;
     }
     
-@media (min-width: 900px) {
-        body {
-            font-size: 20px;
-        }
+    /* ปรับให้รูปภาพและข้อความบรรยายเต็มหน้าจอ */
     
-        nav ul {
-            max-width: 900px;
-            margin: 0 auto;
-            justify-content: space-evenly;
-        }
-    
-        section {
-            max-width: 1000px;
-            margin: 40px auto;
-        }
+    .Flower-image {
+        max-width: 60%; /* ทำให้รูปภาพพอดีกับหน้าจอ */
+        height: auto;
     }
+
+    .content {
+    display: flex;
+    justify-content: center; /* จัดให้อยู่กึ่งกลางแนวนอน */
+    align-items: center;     /* จัดให้อยู่กึ่งกลางแนวตั้ง */
+    min-height: auto;       /* ทำให้เนื้อหาอยู่ในบล็อคเต็มความสูง */
+    text-align: center;      /* จัดข้อความใน p ให้อยู่กึ่งกลางแนวนอน */
+}
+
+    .description {
+    max-width: 600px;        /* กำหนดความกว้างสูงสุดของข้อความ */
+}
+}
