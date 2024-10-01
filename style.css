@@ -154,16 +154,36 @@ footer > section > a {          color: white;
                                 text-decoration: none; }
 footer > section > a:hover { color: rgba(0, 0, 0, 0.336);}
 
-@media screen and (max-width: 700px) {
-    ul.menubar li a { display: block;
-                      float: none;
-                      text-align: center;} 
-     article > section { padding: 15px; }
-     #imgS {      width: 100%;}
-     #imgL, imgR { width: 100%;
-                   height: auto;
-                   margin-bottom: 20px;      }
-     footer > section:first-child { display: none;}
-     footer > section { text-align: center;
-                        padding-top: 2em;}
-     }
+
+
+@media (min-width: 600px) {
+        body {
+            font-size: 18px;
+        }
+    
+        nav ul {
+            justify-content: space-around;
+        }
+    
+        section {
+            max-width: 800px;
+            margin: 20px auto;
+        }
+    }
+    
+@media (min-width: 900px) {
+        body {
+            font-size: 20px;
+        }
+    
+        nav ul {
+            max-width: 900px;
+            margin: 0 auto;
+            justify-content: space-evenly;
+        }
+    
+        section {
+            max-width: 1000px;
+            margin: 40px auto;
+        }
+    }
