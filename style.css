@@ -193,17 +193,20 @@ footer > section > a:hover { color: rgba(0, 0, 0, 0.336);}
 
     /* ปรับการจัดวางและขนาดของ footer */
     footer {
-        padding: 20px;
-        text-align: center;
+        padding: 10px;
     }
-
-    footer > section:first-child {
-        display: none; /* ซ่อนส่วนที่ไม่จำเป็น */
+    
+    footer section {
+        margin-bottom: 1em;
     }
-
-    footer > section {
-        text-align: center;
-                        padding-top: 2em;
+    
+    footer a {
+        font-size: 0.8em;
+        margin: 0.3em 0;
+    }
+    
+    #icon {
+        width: 1em; /* ลดขนาดไอคอนลงสำหรับมือถือ */
     }
 }
 
