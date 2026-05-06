@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial: การแจกแจงของการสุ่มตัวอย่าง</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        :root {
+            --primary: #005088;
+            --secondary: #f8fafc;
+            --accent: #e2e8f0;
+            --text: #334155;
+            --success: #16a34a;
+        }
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #f1f5f9;
+            color: var(--text);
+            line-height: 1.6;
+            padding: 40px 20px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .problem-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            padding: 30px;
+            margin-bottom: 40px;
+            border-top: 5px solid var(--primary);
+        }
+        .problem-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .problem-statement {
+            font-size: 1.15rem;
+            background: var(--secondary);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            margin-bottom: 25px;
+        }
+        .step {
+            display: none;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            background: #ffffff;
+            animation: fadeIn 0.5s ease;
+        }
+        .step.active {
+            display: block;
+        }
+        .step-header {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        .math-box {
+            font-size: 1.25rem;
+            text-align: center;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        .btn-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1.1rem;
+            font-family: 'Sarabun', sans-serif;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.1s;
+            font-weight: 600;
+        }
+        button:hover {
+            background: #003a66;
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+        button:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+        }
+        .final-answer {
+            background: #f0fdf4;
+            border-left-color: var(--success);
+        }
+        .final-answer .step-header { color: var(--success); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>📊 ห้องเรียนสถิติโต้ตอบ (Interactive Tutorial)</h1>
+        <p style="font-size: 1.2rem;">กดปุ่ม "ดูขั้นตอนต่อไป" เพื่อค่อยๆ ดูวิธีทำทีละขั้น เหมาะสำหรับการฝึกคิดตาม</p>
+    </div>
+
+    <div class="problem-card" id="problem1">
+        <div class="problem-title">โจทย์ข้อ 1: การหาความน่าจะเป็นของค่าเฉลี่ย (Z-Distribution)</div>
+        <div class="problem-statement">
+            คะแนนสอบวิชาสถิติของนักศึกษาทั้งประเทศมีการแจกแจงปกติ โดยมีคะแนนเฉลี่ย (\( \mu \)) = 72 คะแนน และส่วนเบี่ยงเบนมาตรฐาน (\( \sigma \)) = 15 คะแนน<br><br>
+            หากสุ่มนักศึกษามา <strong>36 คน</strong> จงหาความน่าจะเป็นที่กลุ่มตัวอย่างนี้จะมีคะแนนสอบเฉลี่ย (\( \bar{X} \)) <strong>น้อยกว่า 68 คะแนน</strong>
+        </div>
+
+        <div id="steps-container-1">
+            <div class="step" id="p1-s1">
+                <div class="step-header">ขั้นที่ 1: กำหนดค่าที่ทราบจากโจทย์</div>
+                <ul>
+                    <li>\( \mu = 72 \)</li>
+                    <li>\( \sigma = 15 \)</li>
+                    <li>\( n = 36 \) (ซึ่ง \( n \ge 30 \) สามารถใช้สมบัติโค้งปกติได้)</li>
+                    <li>ต้องการหา: \( P(\bar{X} < 68) \)</li>
+                </ul>
+            </div>
+            
+            <div class="step" id="p1-s2">
+                <div class="step-header">ขั้นที่ 2: คำนวณความคลาดเคลื่อนมาตรฐาน (Standard Error)</div>
+                <p>สูตรความคลาดเคลื่อนมาตรฐานของค่าเฉลี่ยคือ \( \sigma_{\bar{X}} = \frac{\sigma}{\sqrt{n}} \)</p>
+                <div class="math-box">
+                    \( \sigma_{\bar{X}} = \frac{15}{\sqrt{36}} = \frac{15}{6} = 2.5 \)
+                </div>
+            </div>
+
+            <div class="step" id="p1-s3">
+                <div class="step-header">ขั้นที่ 3: แปลงคะแนนดิบเป็นค่า Z (Z-Score)</div>
+                <p>ใช้สูตรแปลงค่า \( \bar{X} \) เป็น \( Z \)</p>
+                <div class="math-box">
+                    \( Z = \frac{\bar{X} - \mu}{\sigma_{\bar{X}}} = \frac{68 - 72}{2.5} \)
+                    <br><br>
+                    \( Z = \frac{-4}{2.5} = -1.60 \)
+                </div>
+            </div>
+
+            <div class="step final-answer" id="p1-s4">
+                <div class="step-header">ขั้นที่ 4: เปิดตาราง Z และสรุปคำตอบ</div>
+                <p>เราต้องการหา \( P(Z < -1.60) \)</p>
+                <p>เมื่อเปิดตารางการแจกแจงปกติมาตรฐาน (Z-table) ที่ค่า Z = -1.60 จะพบพื้นที่ใต้โค้งเท่ากับ <strong>0.0548</strong></p>
+                <div class="math-box" style="font-weight: 700; color: var(--success);">
+                    คำตอบ: มีความน่าจะเป็น 0.0548 หรือ 5.48%
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-container">
+            <button id="btn-next-1" onclick="showNextStep(1)">ดูขั้นตอนต่อไป ⬇️</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // State tracking for steps
+    const state = {
+        1: { currentStep: 0, totalSteps: 4 }
+    };
+
+    function showNextStep(problemId) {
+        const pState = state[problemId];
+        if (pState.currentStep < pState.totalSteps) {
+            pState.currentStep++;
+            const stepEl = document.getElementById(`p1-s${pState.currentStep}`);
+            stepEl.classList.add('active');
+            
+            // Re-render math rendering for newly visible elements
+            MathJax.Hub.Queue(["Typeset", MathJax.Hub, stepEl]);
+
+            // Disable button if reached the end
+            if (pState.currentStep === pState.totalSteps) {
+                const btn = document.getElementById(`btn-next-${problemId}`);
+                btn.innerText = "จบวิธีทำ 🎉";
+                btn.disabled = true;
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เฉลยแบบฝึกหัด สถิติ บทที่ 5 (ฉบับสมบูรณ์)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        :root {
+            --primary: #4F46E5; /* Indigo */
+            --secondary: #0EA5E9; /* Sky blue */
+            --bg-color: #F1F5F9; /* Slate 100 */
+            --card-bg: #FFFFFF;
+            --text-main: #1E293B; /* Slate 800 */
+            --text-light: #64748B; /* Slate 500 */
+            --accent: #F59E0B; /* Amber */
+            --success: #10B981; /* Emerald */
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background: var(--card-bg);
+            padding: 30px 20px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .nav-item {
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .nav-item:hover {
+            background: #F8FAFC;
+            color: var(--primary);
+        }
+        .nav-item.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.3);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            margin-left: 280px;
+            padding: 40px;
+            width: calc(100% - 280px);
+            max-width: 1000px;
+        }
+
+        /* Question Cards */
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+            display: none; /* Hidden by default */
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        .question-card.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .q-header {
+            border-left: 5px solid var(--accent);
+            padding-left: 20px;
+            margin-bottom: 30px;
+            background: #FFFBEB;
+            padding: 20px;
+            border-radius: 0 10px 10px 0;
+        }
+        .q-header h2 {
+            margin: 0 0 10px 0;
+            color: #D97706;
+        }
+        .q-header p {
+            margin: 0;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .step-box {
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            position: relative;
+            background: #FAFAF9;
+        }
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: var(--secondary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 4px rgba(14, 165, 233, 0.3);
+        }
+        
+        .math-block {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.2rem;
+            margin: 15px 0;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+            overflow-x: auto;
+        }
+
+        .highlight-answer {
+            background: #ECFDF5;
+            border: 2px solid var(--success);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+        .highlight-answer h3 {
+            color: #047857;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid #E2E8F0;
+        }
+        th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 500;
+        }
+        tr:last-child td { border-bottom: none; }
+        tr:nth-child(even) { background-color: #F8FAFC; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; position: relative; padding: 20px; display: flex; flex-wrap: wrap; gap: 10px; }
+            .logo { width: 100%; }
+            .nav-item { flex: 1; min-width: 120px; justify-content: center; margin-bottom: 0; }
+            .main-content { margin-left: 0; width: 100%; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="logo">
+            <i class="fa-solid fa-calculator"></i> เฉลยบทที่ 5
+        </div>
+        <div class="nav-item" onclick="showTab(1)">
+            <i class="fa-solid fa-1"></i> ข้อ 1: ค่ากลาง
+        </div>
+        <div class="nav-item" onclick="showTab(2)">
+            <i class="fa-solid fa-2"></i> ข้อ 2: การกระจาย
+        </div>
+        <div class="nav-item" onclick="showTab(3)">
+            <i class="fa-solid fa-3"></i> ข้อ 3: สุ่มไม่คืนกลับ
+        </div>
+        <div class="nav-item" onclick="showTab(4)">
+            <i class="fa-solid fa-4"></i> ข้อ 4: สุ่มแบบคืนกลับ
+        </div>
+        <div class="nav-item active" onclick="showTab(5)">
+            <i class="fa-solid fa-5"></i> ข้อ 5: ข้อมูลนิสิต
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <!-- Question 1 -->
+        <div class="question-card" id="q1">
+            <div class="q-header">
+                <h2>โจทย์ข้อ 1</h2>
+                <p>จงหาค่าเฉลี่ยเลขคณิต มัธยฐาน และฐานนิยม ของค่าสังเกตต่อไปนี้: 18, 10, 11, 98, 22, 15, 11, 25, 17<br>
+                ค่าสถิติที่หาได้ค่าใดเหมาะสมที่สุดในการวัดแนวโน้มเข้าสู่ส่วนกลางของข้อมูลนี้เพราะเหตุใด?</p>
+            </div>
+            <!-- เนื้อหาข้อ 1 (คงเดิม) -->
+            <div class="step-box">
+                <div class="step-number">ขั้นที่ 1: เตรียมข้อมูล</div>
+                <p>จำนวนข้อมูลทั้งหมด (\(n\)) = 9 ตัว<br>
+                เรียงข้อมูลจากน้อยไปมาก: <strong>10, 11, 11, 15, 17, 18, 22, 25, 98</strong></p>
+            </div>
+            <div class="step-box">
+                <div class="step-number">ขั้นที่ 2: คำนวณค่าต่างๆ</div>
+                <p><strong>1. ค่าเฉลี่ยเลขคณิต (Mean)</strong></p>
+                <div class="math-block">
+                    \(\bar{x} = \frac{\sum x}{n} = \frac{10+11+11+15+17+18+22+25+98}{9} = \frac{227}{9} \approx 25.22\)
+                </div>
+                <p><strong>2. มัธยฐาน (Median)</strong></p>
+                <p>คือค่าที่อยู่ตำแหน่งตรงกลาง ตำแหน่ง = \(\frac{n+1}{2} = 5\) ข้อมูลในตำแหน่งที่ 5 คือ <strong>17</strong></p>
+                <p><strong>3. ฐานนิยม (Mode)</strong></p>
+                <p>คือข้อมูลที่ซ้ำกันมากที่สุด ในที่นี้คือ <strong>11</strong> (มี 2 ตัว)</p>
+            </div>
+            <div class="highlight-answer">
+                <h3><i class="fa-solid fa-lightbulb"></i> สรุปคำตอบและเหตุผล</h3>
+                <p><strong>ค่าที่เหมาะสมที่สุดคือ: มัธยฐาน (17)</strong></p>
+                <p><strong>เหตุผล:</strong> เพราะในชุดข้อมูลนี้มีค่าผิดปกติ (Outlier) คือค่า <strong>98</strong> การใช้ค่าเฉลี่ยจะถูกดึงให้สูงเกินจริง มัธยฐานจึงเหมาะสมที่สุด</p>
+            </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="question-card" id="q2">
+            <div class="q-header">
+                <h2>โจทย์ข้อ 2</h2>
+                <p>เช้าวันหนึ่ง ถามคนหาปลา 8 คน อย่างสุ่ม จำนวนปลาที่เขาจับได้มีดังนี้: 7, 4, 6, 7, 4, 4, 8, 7<br>
+                จงหาค่าของพิสัยและส่วนเบี่ยงเบนมาตรฐานของจำนวนปลาที่จับได้</p>
+            </div>
+            <div class="step-box">
+                <div class="step-number">ขั้นที่ 1: หาพิสัย (Range)</div>
+                <p>เรียงข้อมูล: 4, 4, 4, 6, 7, 7, 7, 8</p>
+                <div class="math-block">
+                    \( \text{พิสัย} = 8 - 4 = 4 \) ตัว
+                </div>
+            </div>
+            <div class="step-box">
+                <div class="step-number">ขั้นที่ 2: หาส่วนเบี่ยงเบนมาตรฐาน (S)</div>
+                <p>ใช้สูตรกลุ่มตัวอย่าง (\(n-1\)) หาค่าเฉลี่ย \(\bar{x} = 47/8 = 5.875\)</p>
+                <div class="math-block">
+                    \(S^2 = \frac{\sum (x_i - \bar{x})^2}{n-1} = \frac{18.875}{7} \approx 2.6964\)
+                </div>
+                <div class="math-block">
+                    \(S = \sqrt{2.6964} \approx 1.642\)
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="question-card" id="q3">
+            <div class="q-header">
+                <h2>โจทย์ข้อ 3</h2>
+                <p>ประชากร 2, 3, 6, 8, 11 (\(N=5\)) สุ่มตัวอย่างขนาด 2 แบบไม่คืนกลับ</p>
+            </div>
+            <div class="step-box">
+                <div class="step-number">ผลลัพธ์</div>
+                <p>\(\mu = 6\), \(\sigma^2 = 10.8\)</p>
+                <p>การพิสูจน์ \(\sigma_{\bar{X}}\) ใช้สูตร Finite Population: \(\sigma_{\bar{X}} = \frac{\sigma}{\sqrt{n}}\sqrt{\frac{N-n}{N-1}} = \sqrt{4.05}\)</p>
+            </div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="question-card" id="q4">
+            <div class="q-header">
+                <h2>โจทย์ข้อ 4</h2>
+                <p>จากประชากรในข้อ 3 สุ่มตัวอย่างขนาด 2 แบบคืนกลับที่เดิม</p>
+            </div>
+            <div class="step-box">
+                <div class="step-number">ผลลัพธ์</div>
+                <p>การพิสูจน์ \(\sigma_{\bar{X}}\) ใช้สูตร Infinite Population: \(\sigma_{\bar{X}} = \frac{\sigma}{\sqrt{n}} = \sqrt{5.4}\)</p>
+            </div>
+        </div>
+
+        <!-- Question 5 (NEW) -->
+        <div class="question-card active" id="q5">
+            <div class="q-header">
+                <h2>โจทย์ข้อ 5 (เพิ่มใหม่)</h2>
+                <p>คะแนนเฉลี่ยของนิสิต 15 คน <strong>ซึ่งเลือกมาโดยวิธีสุ่ม</strong>จากประชากรนิสิต มีดังนี้:<br>
+                2.3, 3.4, 2.9, 2.6, 2.1, 2.4, 3.1, 2.7, 2.0, 2.6, 1.9, 3.6, 2.1, 1.8, 2.1<br>
+                จงหาค่าเฉลี่ย ความแปรปรวน และ ส่วนเบี่ยงเบนมาตรฐาน</p>
+            </div>
+
+            <div class="step-box">
+                <div class="step-number">ขั้นที่ 1: เตรียมข้อมูลเบื้องต้น (Sums)</div>
+                <p>เนื่องจากข้อมูลมีทศนิยม การคำนวณความแปรปรวนโดยใช้สูตรลัด (Computational Formula) จะช่วยลดความคลาดเคลื่อนจากการปัดเศษทศนิยมได้ดีที่สุด เราจึงต้องหาผลรวม 2 ตัวก่อน:</p>
+                <ul style="font-size: 1.1rem;">
+                    <li>จำนวนตัวอย่าง <strong>\(n = 15\)</strong></li>
+                    <li>ผลรวมของข้อมูล <strong>\((\sum x_i) = 37.6\)</strong></li>
+                    <li>ผลรวมของกำลังสองของข้อมูล <strong>\((\sum x_i^2) = 2.3^2 + 3.4^2 + ... + 2.1^2 = 98.48\)</strong></li>
+                </ul>
+            </div>
+
+            <div class="step-box">
+                <div class="step-number">ขั้นที่ 2: คำนวณค่าเฉลี่ย (Mean)</div>
+                <div class="math-block">
+                    \(\bar{x} = \frac{\sum x_i}{n} = \frac{37.6}{15} \approx 2.5067\)
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-number">ขั้นที่ 3: คำนวณความแปรปรวน (Variance)</div>
+                <p>⚠️ <strong>จุดสำคัญ:</strong> โจทย์ระบุว่า "เลือกมาโดยวิธีสุ่ม" ดังนั้นข้อมูลชุดนี้คือ <strong>กลุ่มตัวอย่าง</strong> เราต้องใช้สูตรความแปรปรวนของกลุ่มตัวอย่าง (\(S^2\)) ซึ่งตัวส่วนคือ \(n-1\)</p>
+                
+                <p>ใช้สูตรลัดในการคำนวณเพื่อความแม่นยำ:</p>
+                <div class="math-block" style="font-size: 1.1rem;">
+                    \(S^2 = \frac{n(\sum x_i^2) - (\sum x_i)^2}{n(n-1)}\) <br><br>
+                    \(S^2 = \frac{15(98.48) - (37.6)^2}{15(15-1)}\) <br><br>
+                    \(S^2 = \frac{1477.2 - 1413.76}{15(14)}\) <br><br>
+                    \(S^2 = \frac{63.44}{210}\) <br><br>
+                    \(S^2 \approx 0.30209...\)
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-number">ขั้นที่ 4: คำนวณส่วนเบี่ยงเบนมาตรฐาน (Standard Deviation)</div>
+                <p>ถอดรากที่สองของความแปรปรวน</p>
+                <div class="math-block">
+                    \(S = \sqrt{0.3021} \approx 0.5496\)
+                </div>
+            </div>
+
+            <div class="highlight-answer">
+                <h3><i class="fa-solid fa-check-circle"></i> สรุปคำตอบข้อ 5</h3>
+                <ul style="font-size: 1.1rem; line-height: 1.8;">
+                    <li><strong>ค่าเฉลี่ย (\(\bar{x}\)):</strong> 2.51</li>
+                    <li><strong>ความแปรปรวน (\(S^2\)):</strong> 0.3021</li>
+                    <li><strong>ส่วนเบี่ยงเบนมาตรฐาน (\(S\)):</strong> 0.55</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function showTab(tabId) {
+            document.querySelectorAll('.question-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-item').forEach(nav => {
+                nav.classList.remove('active');
+            });
+            
+            document.getElementById('q' + tabId).classList.add('active');
+            document.querySelectorAll('.nav-item')[tabId - 1].classList.add('active');
+
+            MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
